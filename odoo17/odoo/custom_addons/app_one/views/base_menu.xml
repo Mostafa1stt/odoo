@@ -1,0 +1,18 @@
+<odoo>
+    <menuitem
+        id="task_root_menu"
+        name="To-Do"
+    />
+    <menuitem
+        id="project_menu"
+        name="Projecties"
+        parent="task_root_menu"
+    />
+
+    <menuitem
+        id="user_menu"
+        name="Users"
+        parent="task_root_menu"
+    />
+
+</odoo>
