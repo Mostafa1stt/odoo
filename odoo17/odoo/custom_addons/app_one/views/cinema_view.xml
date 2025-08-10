@@ -1,0 +1,92 @@
+<odoo>
+
+    <record id="movie_kanban_view" model='ir.ui.view'>
+        <field name="name">Cinema kanban view</field>
+        <field name="model">cinema</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name='kanban-box'>
+                        <div class="oe_kanban_global_click">
+                            <div>
+                                <field name="poster" widget="image" class="oe_avatar" />
+                            </div>
+                            <div>
+                                <h1>
+                                    <div> Title: <field name="title" />
+                                    </div>
+                                </h1>
+                                <div> Genre: <field name="genre" /></div>
+                            </div>
+                            <div> Releases: <field name="releases" /></div>
+                            <div> Rating: <field name="rating" />/5</div>
+                            <div> Price: <field name="price" /> EGP</div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <record id='movie_form_view' model="ir.ui.view">
+        <field name="name">movie form</field>
+        <field name="model">cinema</field>
+        <field name="arch" type='xml'>
+            <form>
+                <sheet>
+                    <header>
+                        <field name='status' widget='statusbar' />
+                    </header>
+                    <div>
+                        <label for='title' />
+                        <h1>
+                            <field name='title' />
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="General Info.">
+                            <field name='genre' />
+                            <field name='releases' />
+                            <field name='rating' />
+                            <field name='price' />
+                            <field name='language' />
+                            <field name='poster' widget="image" />
+                        </group>
+                    </group>
+                    <group string="Over View">
+                        <field name='overview' />
+                    </group>
+                </sheet>
+                <notebook>
+                    <page string="Actors">
+                        <field name="actor" widget="many2many_tags_avatar" />
+                    </page>
+                    <page string="Writers">
+                        <field name="writer" widget="many2many_tags_avatar" />
+                    </page>
+                    <page string="Producers">
+                        <field name="producer" widget="many2many_tags_avatar" />
+                    </page>
+                    <page string="Director">
+                        <field name="director" widget="many2many_tags_avatar" />
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="cinema_action" model="ir.actions.act_window">
+        <field name="name">Movies</field>
+        <field name="res_model">cinema</field>
+        <field name="view_mode">kanban,form</field>
+    </record>
+
+    <menuitem
+        id="menu_movies"
+        name="Movies"
+        action='cinema_action'
+        parent="cinema_menu_root"
+    />
+
+</odoo>

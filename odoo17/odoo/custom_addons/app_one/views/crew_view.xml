@@ -1,0 +1,83 @@
+<odoo>
+
+    <record id="crew_kanban_view" model='ir.ui.view'>
+        <field name="name">Crew kanban view</field>
+        <field name="model">crew</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name='kanban-box'>
+                        <div class="oe_kanban_global_click">
+                            <div>
+                                <field name="photo" widget="image" class="oe_avatar" />
+                            </div>
+                            <div>
+                                <h1>
+                                    <div> name: <field name="name" />
+                                    </div>
+                                </h1>
+                                <div> age: <field name="age" /></div>
+                            </div>
+                            <div> gender: <field name="gender" /></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+
+    <record id='crew_form_view' model="ir.ui.view">
+        <field name="name">crew form</field>
+        <field name="model">crew</field>
+        <field name="arch" type='xml'>
+            <form>
+                <sheet>
+                    <div>
+                        <label for='name' />
+                        <h1>
+                            <field name='name' />
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="General Info.">
+                            <field name='photo' widget='image'/>
+                            <field name='age' />
+                            <field name='gender' />
+                        </group>
+                        <field name='biography' />
+                    </group>
+                </sheet>
+                <notebook>
+                    <page string="Actor On">
+                        <field name="actor_on" widget="many2many_tags_avatar"/>
+                    </page>
+                    <page string="Writer Of">
+                        <field name="writer_of" widget="many2many_tags_avatar" />
+                    </page>
+                    <page string="Producer Of">
+                        <field name="producer_of" widget="many2many_tags_avatar" />
+                    </page>
+                    <page string="Director Of">
+                        <field name="director_of" widget="many2many_tags_avatar" />
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="crew_action" model="ir.actions.act_window">
+        <field name="name">Crew List</field>
+        <field name="res_model">crew</field>
+        <field name="view_mode">kanban,form</field>
+    </record>
+
+    <menuitem
+        id="menu_crew"
+        name="Crew"
+        action='crew_action'
+        parent="cinema_menu_root"
+    />
+
+</odoo>

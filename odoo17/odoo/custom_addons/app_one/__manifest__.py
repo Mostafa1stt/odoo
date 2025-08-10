@@ -1,15 +1,14 @@
 {
-    'name': "ToDo App",
+    'name': "Cinema App",
     'author': "mostafa abdelkareem",
-    'category': "",
+    'category': "Media",
     'version': "17.0.0.1.0",
-    'depends': ['base',],
+    'depends': ['base', ],
     'data': [
         'security/ir.model.access.csv',
-        'views/base_menu.xml',
-        'views/task_view.xml',
-        'views/user_view.xml',
+        'views/base_menu_view.xml',
+        'views/cinema_view.xml',
+        'views/crew_view.xml',
     ],
     'application': True,
-
 }

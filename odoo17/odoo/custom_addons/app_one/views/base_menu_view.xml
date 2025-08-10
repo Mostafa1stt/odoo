@@ -1,0 +1,6 @@
+<odoo>
+        <menuitem
+        id="cinema_menu_root"
+        name="Cinema"
+        /> 
+</odoo>
