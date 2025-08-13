@@ -56,9 +56,6 @@
                     <page string="Writer Of">
                         <field name="writer_of" widget="many2many_tags_avatar" />
                     </page>
-                    <page string="Producer Of">
-                        <field name="producer_of" widget="many2many_tags_avatar" />
-                    </page>
                     <page string="Director Of">
                         <field name="director_of" widget="many2many_tags_avatar" />
                     </page>

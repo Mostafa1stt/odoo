@@ -1,5 +1,21 @@
 <odoo>
 
+    <record id='movie_tree_view' model="ir.ui.view">
+        <field name='name'>Cinema List view</field>
+        <field name='model'>cinema</field>
+        <field name='arch' type='xml'>
+            <tree>
+                <field name='title' />
+                <field name='genre' />
+                <field name='releases' />
+                <field name='rating' />
+                <field name='price' />
+                <field name='language' />
+                <field name='active' invisible='1' />
+            </tree>
+        </field>
+    </record>
+
     <record id="movie_kanban_view" model='ir.ui.view'>
         <field name="name">Cinema kanban view</field>
         <field name="model">cinema</field>
@@ -36,7 +52,7 @@
             <form>
                 <sheet>
                     <header>
-                        <field name='status' widget='statusbar' />
+                        <field name='status' widget='statusbar' statusbar_visible="" />
                     </header>
                     <div>
                         <label for='title' />
@@ -52,6 +68,7 @@
                             <field name='price' />
                             <field name='language' />
                             <field name='poster' widget="image" />
+                            <field name='active' invisible='1' />
                         </group>
                     </group>
                     <group string="Over View">
@@ -65,21 +82,66 @@
                     <page string="Writers">
                         <field name="writer" widget="many2many_tags_avatar" />
                     </page>
-                    <page string="Producers">
-                        <field name="producer" widget="many2many_tags_avatar" />
-                    </page>
                     <page string="Director">
                         <field name="director" widget="many2many_tags_avatar" />
                     </page>
                 </notebook>
+                <div class='oe_chatter'>
+                    <field name='message_follower_ids' />
+                    <field name='activity_ids' />
+                    <field name='message_ids' />
+                </div>
             </form>
         </field>
     </record>
 
+    <record id='check_release_date' model="ir.cron">
+        <field name='name'>Cinema: check releases</field>
+        <field name='model_id' ref="model_cinema" />
+        <field name='state'>code</field>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>days</field>
+        <field name='code'>model._compute_status()</field>
+        <field name='numbercall'>-1</field>
+        <field name='active'>True</field>
+    </record>
+
+    <record id='check_status' model="ir.cron">
+        <field name='name'>Cinema: check status</field>
+        <field name='model_id' ref="model_cinema" />
+        <field name='state'>code</field>
+        <field name='interval_number'>1</field>
+        <field name='interval_type'>days</field>
+        <field name='code'>model._compute_active_closed()</field>
+        <field name='numbercall'>-1</field>
+        <field name='active'>True</field>
+    </record>
+
+    <record id='cinema_closed_server_action' model='ir.actions.server'>
+        <field name='name'>Close</field>
+        <field name='model_id' ref="model_cinema" />
+        <field name='binding_model_id' ref="model_cinema" />
+        <field name='state'>code</field>
+        <field name='code'>
+            action = records.action_closed()
+        </field>
+    </record>
+
+    <record id='cinema_open_server_action' model='ir.actions.server'>
+        <field name='name'>open</field>
+        <field name='model_id' ref="model_cinema" />
+        <field name='binding_model_id' ref="model_cinema" />
+        <field name='state'>code</field>
+        <field name='code'>
+            action = records.action_open()
+        </field>
+    </record>
+
+
     <record id="cinema_action" model="ir.actions.act_window">
         <field name="name">Movies</field>
         <field name="res_model">cinema</field>
-        <field name="view_mode">kanban,form</field>
+        <field name="view_mode">kanban,list,form</field>
     </record>
 
     <menuitem

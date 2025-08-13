@@ -13,11 +13,6 @@ class Crew(models.Model):
         'movie_director_rel',
         'crew_id',
         'cinema_id')
-    producer_of = fields.Many2many(
-        'cinema',
-        'movie_producer_rel',
-        'crew_id',
-        'cinema_id')
     writer_of = fields.Many2many(
         'cinema',
         'movie_writer_rel',

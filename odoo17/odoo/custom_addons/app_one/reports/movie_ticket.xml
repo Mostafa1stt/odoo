@@ -1,0 +1,177 @@
+<odoo>
+
+    <record id="movie_ticket" model="ir.actions.report">
+        <field name="name">purchase a ticket</field>
+        <field name="model">cinema</field>
+        <field name="report_type">qweb-html</field>
+        <field name="binding_model_id" ref="model_cinema" />
+        <field name="binding_type">report</field>
+        <field name="report_name">app_one.movie_ticket_template</field>
+    </record>
+
+    <template id="movie_ticket_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <html lang="ar">
+                    <head>
+                        <meta charset="UTF-8" />
+                        <title>Vintage Cinema Ticket</title>
+                        <link
+                            href="https://fonts.googleapis.com/css2?family=Amiri&amp;family=Cinzel:wght@600&amp;display=swap"
+                            rel="stylesheet" />
+                        <style>
+                            body {
+                            font-family: 'Amiri', serif;
+                            background: #eee;
+                            padding: 30px;
+                            display: flex;
+                            justify-content: center;
+                            }
+                            .ticket {
+                            width: 500px;
+                            background: #f8c6c6;
+                            background-image: radial-gradient(rgba(0,0,0,0.05) 1px, transparent
+                            1px);
+                            background-size: 4px 4px;
+                            padding: 15px;
+                            border: 2px dashed #000;
+                            border-radius: 6px;
+                            box-shadow: 2px 2px 8px rgba(0,0,0,0.35);
+                            position: relative;
+                            }
+                            .perforation {
+                            height: 0;
+                            border-top: 2px dashed #000;
+                            margin: 8px 0;
+                            }
+                            .row {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin: 3px 0;
+                            width: 100%;
+                            }
+
+                            .ltr, .rtl {
+                            flex: 1; /* Each takes half the row */
+                            }
+
+                            .ltr {
+                            text-align: left;
+                            direction: ltr;
+                            }
+
+                            .rtl {
+                            text-align: right;
+                            direction: rtl;
+                            }
+                            .center { text-align: center; }
+                            .title { font-family: 'Cinzel', serif; font-weight: bold; }
+                            .movie-section {
+                            border: 1px solid #000;
+                            padding: 5px;
+                            margin: 6px 0;
+                            background: #f3bdbd;
+                            border-radius: 4px;
+                            }
+                            .movie-title { font-size: 17px; font-weight: bold; }
+                            .small { font-size: 12px; }
+                            .divider { border-top: 1px solid #000; margin: 4px 0; }
+                            .bold-divider { border-top: 2px solid #000; margin: 6px 0; }
+                            .total { font-size: 18px; font-weight: bold; }
+                            .faded { color: rgba(0,0,0,0.85); }
+                            .ticket-number {
+                            position: absolute;
+                            top: 10px;
+                            right: 15px;
+                            font-size: 12px;
+                            font-weight: bold;
+                            background: #fff4f4;
+                            padding: 2px 6px;
+                            border: 1px solid #000;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="ticket" id="ticket">
+                            <div class="ticket-number">No. 001256</div>
+                            <div class="perforation"></div>
+
+                            <div class="row title faded">
+                                <div class="ltr" id="cinema-en">CINE MOHAMED ALY</div>
+                                <div class="rtl" id="cinema-ar">سينما محمد علي</div>
+                            </div>
+
+                            <div class="movie-section">
+                                <div class="row">
+                                    <div class="ltr movie-title" id="movie-en">
+                                        <t t-esc="o.title" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row faded">
+                                <div class="ltr" id="day-en">Monday</div>
+                                <div class="rtl" id="day-ar">الاثنين</div>
+                            </div>
+                            <div class="row faded">
+                                <div class="ltr" id="date-en">9/10</div>
+                                <div class="rtl" id="date-ar">٩ / ١٠</div>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <!-- Hall -->
+                            <div class="center title faded" id="hall-ar">صالة درجة ثانية</div>
+                            <div class="center title ltr faded" id="hall-en">GROUND FLOOR B</div>
+
+                            <div class="divider"></div>
+
+                            <!-- Prices -->
+                            <div class="row small faded">
+                                <div class="ltr">Ticket Price: <span id="price-en">8.0</span> E£</div>
+                                <div class="rtl">ثمن الدخول: <span id="price-ar">٨.٠</span> ج.م</div>
+                            </div>
+                            <div class="row small faded">
+                                <div class="ltr">Municipality Fee: <span id="tax-en">2.5</span> E£</div>
+                                <div class="rtl">رسوم البلديه: <span id="tax-ar">٢.٥</span> ج.م</div>
+                            </div>
+                            <div class="row small faded">
+                                <div class="ltr">Service Charge: <span id="extra-en">0.5</span> E£</div>
+                                <div class="rtl">رسوم الخدمة: <span id="extra-ar">٠.٥</span> ج.م</div>
+                            </div>
+
+                            <div class="bold-divider"></div>
+
+                            <!-- Total -->
+                            <div class="row total">
+                                <div class="ltr">Total: <span id="total-en">
+                                        <t t-esc="o.price + 2.5 + 0.5" />
+                                    </span>
+                                    E£</div>
+                                <div class="rtl">المجموع: <span id="total-ar"></span> ج.م</div>
+                            </div>
+
+                            <div class="perforation"></div>
+                        </div>
+
+                        <script>
+                            function toArabicNumber(num) {
+                            const arabicDigits = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+                            return num.toString().replace(/\d/g, d => arabicDigits[d]);
+                            }
+
+                            document.addEventListener("DOMContentLoaded", function () {
+                            let totalEn = document.getElementById("total-en").innerText;
+                            document.getElementById("total-ar").innerText = toArabicNumber(totalEn);
+                            document.getElementById("price-ar").innerText =
+                            toArabicNumber(document.getElementById("price-en").innerText);
+                            });
+                        </script>
+                    </body>
+                </html>
+            </t>
+        </t>
+    </template>
+
+</odoo>
